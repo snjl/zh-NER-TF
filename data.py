@@ -21,9 +21,12 @@ def read_corpus(corpus_path):
     sent_, tag_ = [], []
     for line in lines:
         if line != '\n':
-            [char, label] = line.strip().split()
-            sent_.append(char)
-            tag_.append(label)
+            # 偶尔有为空格的标注情况，这时候会出现split后只有一个值
+            if len(line.strip().split()) == 2:
+                [char, label] = line.strip().split()
+                sent_.append(char)
+                tag_.append(label)
+
         else:
             data.append((sent_, tag_))
             sent_, tag_ = [], []
